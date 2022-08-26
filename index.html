@@ -9,43 +9,46 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <header>
-        <div class="container h-12 bg-blue-500">
-        <h1 class="app-title">Dog Finder </h1>
-        <p> Find the right Dog for you!</p>
+    <wrapper>
+        <header>
+            <div id="header-flex-container" class="container flex justify-between items-center h-12 bg-blue-500">
+                <div id="header-flex-item-1">
+                    <h1 class="app-title">Dog Finder </h1>
+                    <p> Find the right Dog for you!</p>
+                </div>
+                <div id="header-flex-item-2">
+                Favorites
+                </div>
+            </div>
+        </header>
+
+        <!-- what we do statement/mission statement -->
+        <section id="mission-flex-container" class="container flex justify-center">
+            <div id="mission-flex-item">
+                <h2>Looking for the perfect dog for you, but not sure on a breed?
+                    filler filler filler and then search for that breed of dog near you!
+                </h2>
+            </div>
+        </section>
+
+        <!-- random button and search input -->
+        <div id="search-container" class="container flex justify-around">
+            <button class="bg-blue-700">random dog</button>
+            <input id="breed-search-bar" class="border-2"/>
         </div>
-        <div>
-        Favorites
+
+
+        <!-- adoption info here -->
+        <div id="adoption-info-container" class="container flex justify-center">
+            <div class="bg-blue-600 h-96 w-96">adoption api will go here</div>
         </div>
-    </header>
 
-    <!-- what we do statement -->
-    <section>
-    <div>
-    <h2>Looking for the perfect dog for you, but not sure on a breed?
-        filler filler filler and then search for that breed of dog near you!
-    </h2>
-    </div>
-    </section>
-
-    <!-- random button and search input -->
-<div>
-    <button></button>
-    <input />
-</div>
-
-
-<!-- adoption info here -->
-<div>
-
-</div>
-
-<footer>
-    Made with Love by team 8 
-</footer>
-
+        <footer class="w-full bottom-0 h-16 bg-blue-500">
+            Made with Love by team 8 
+        </footer>
+    </wrapper>
 
     
-    <script src="./assets/js/script.js"></script>
+<script src="./assets/js/script.js"></script>
 </body>
 </html>
