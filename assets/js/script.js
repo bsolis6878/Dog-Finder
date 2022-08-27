@@ -1,6 +1,7 @@
 var breedDropdown = document.querySelector("#breed-search-bar");
 var randomButton = document.querySelector("#random-button");
 var dogBox = document.querySelector("#dog-box");
+var adoptionBox = document.querySelector("#adoption-info");
 
 // adds dropdown option for every breed
 var dogSelections = function() {
@@ -30,17 +31,38 @@ var randomDogs = function() {
                 dogPicture.setAttribute("src", data.message[i]);
                 dogPicture.className = "images";
 
-                // adds breed for each image
+                // adds breed name for each image
                 var breedName = document.createElement("span");
                 breedName.textContent = data.message[i].split("/")[4];
-                dogBox.appendChild(breedName);
 
+                // appends breed name and images to div
+                dogBox.appendChild(breedName);
                 dogBox.appendChild(dogPicture);
-                console.log(data.message[i]);
             }
         })
     })
 }
+
+var pf = new petfinder.Client({apiKey: "gLhpVfdeL124JS6DypuD9akf6FplZYPYXpt97ZVUxwngihkFkK", secret: "srVvrkf10LY9NeiQJwvxOTUJ1yBFmakyDs3W39do"});
+
+// sets adoption information into adoption div
+pf.animal.search()
+        .then(function (response) {
+            console.log(response.data.animals);
+            for (i = 0; i < 5; i++) {
+                // creates span for dog name w/ link to adoption
+                var dogName = document.createElement("a");
+                dogName.textContent = response.data.animals[i].name;
+                dogName.setAttribute("href", response.data.animals[i].url);
+                dogName.setAttribute("target", "_blank");
+                adoptionBox.appendChild(dogName);
+
+                // span for description
+                var dogDescription = document.createElement("span");
+                dogDescription.textContent = response.data.animals[i].description;
+                adoptionBox.appendChild(dogDescription);
+            }
+        })
 
 dogSelections();
 randomButton.addEventListener("click", randomDogs);
