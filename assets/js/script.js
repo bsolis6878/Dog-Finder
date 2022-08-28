@@ -53,21 +53,22 @@ var adoptionFetch = function() {
             console.log(response.data.animals);
             for (i = 0; i < 5; i++) {
                 // creates span for dog name w/ link to adoption
-                var dogName = document.createElement("a");
+                var dogName = document.createElement("span");
                 dogName.textContent = response.data.animals[i].name;
-                dogName.setAttribute("href", response.data.animals[i].url);
-                dogName.setAttribute("target", "_blank");
+                dogName.classList.add("fa", "fa-star");
                 adoptionBox.appendChild(dogName);
-
-                // favorites star
-                var favoriteStar = document.createElement("span");
-                favoriteStar.classList.add("fa", "fa-star");
-                adoptionBox.appendChild(favoriteStar);
 
                 // span for description
                 var dogDescription = document.createElement("span");
                 dogDescription.textContent = response.data.animals[i].description;
                 adoptionBox.appendChild(dogDescription);
+
+                // more info button
+                var moreInfo = document.createElement("a");
+                moreInfo.textContent = "Click here for more info!";
+                moreInfo.setAttribute("href", response.data.animals[i].url);
+                moreInfo.setAttribute("target", "_blank");
+                adoptionBox.appendChild(moreInfo);
             }
             
             // function to add clicked favorite to favorite drop down
