@@ -2,6 +2,7 @@ var breedDropdown = document.querySelector("#breed-search-bar");
 var randomButton = document.querySelector("#random-button");
 var dogBox = document.querySelector("#dog-box");
 var adoptionBox = document.querySelector("#adoption-info");
+var favoritesDropdown = document.querySelector("#favorites");
 
 // adds dropdown option for every breed
 var dogSelections = function() {
@@ -46,7 +47,8 @@ var randomDogs = function() {
 var pf = new petfinder.Client({apiKey: "gLhpVfdeL124JS6DypuD9akf6FplZYPYXpt97ZVUxwngihkFkK", secret: "srVvrkf10LY9NeiQJwvxOTUJ1yBFmakyDs3W39do"});
 
 // sets adoption information into adoption div
-pf.animal.search()
+var adoptionFetch = function() {
+    pf.animal.search()
         .then(function (response) {
             console.log(response.data.animals);
             for (i = 0; i < 5; i++) {
@@ -57,12 +59,20 @@ pf.animal.search()
                 dogName.setAttribute("target", "_blank");
                 adoptionBox.appendChild(dogName);
 
+                // favorites star
+                var favoriteStar = document.createElement("span");
+                favoriteStar.classList.add("fa", "fa-star");
+                adoptionBox.appendChild(favoriteStar);
+
                 // span for description
                 var dogDescription = document.createElement("span");
                 dogDescription.textContent = response.data.animals[i].description;
                 adoptionBox.appendChild(dogDescription);
             }
+            console.log(favoriteStar);
         })
+    }
 
 dogSelections();
 randomButton.addEventListener("click", randomDogs);
+adoptionFetch();
