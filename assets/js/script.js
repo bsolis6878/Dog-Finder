@@ -69,7 +69,17 @@ var adoptionFetch = function() {
                 dogDescription.textContent = response.data.animals[i].description;
                 adoptionBox.appendChild(dogDescription);
             }
-            console.log(favoriteStar);
+            
+            // function to add clicked favorite to favorite drop down
+            var addFavorite = function(event) {
+                var targetEl = event.target;
+
+                if (targetEl.matches(".fa")) {
+                    targetEl.classList.toggle("checked");
+                }
+            }
+            
+            adoptionBox.addEventListener("click", addFavorite);
         })
     }
 
