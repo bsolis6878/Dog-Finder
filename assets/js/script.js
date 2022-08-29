@@ -2,6 +2,8 @@ var breedDropdown = document.querySelector("#breed-search-bar");
 var randomButton = document.querySelector("#random-button");
 var dogBox = document.querySelector("#dog-box");
 var adoptionBox = document.querySelector("#adoption-info");
+var favoritesBox = document.querySelector("#favorites");
+var adoptionSearch = document.querySelector("#adoption-search");
 
 // adds dropdown option for every breed
 var dogSelections = function() {
@@ -46,23 +48,66 @@ var randomDogs = function() {
 var pf = new petfinder.Client({apiKey: "gLhpVfdeL124JS6DypuD9akf6FplZYPYXpt97ZVUxwngihkFkK", secret: "srVvrkf10LY9NeiQJwvxOTUJ1yBFmakyDs3W39do"});
 
 // sets adoption information into adoption div
-pf.animal.search()
+var adoptionFetch = function() {
+    pf.animal.search()
         .then(function (response) {
             console.log(response.data.animals);
-            for (i = 0; i < 5; i++) {
-                // creates span for dog name w/ link to adoption
-                var dogName = document.createElement("a");
-                dogName.textContent = response.data.animals[i].name;
-                dogName.setAttribute("href", response.data.animals[i].url);
-                dogName.setAttribute("target", "_blank");
-                adoptionBox.appendChild(dogName);
+                for (i = 0; i < response.data.animals.length; i++) {
+                    if (response.data.animals[i].species === "Dog") {
+                        // creates div to put each entry into
+                        var singleAdoption = document.createElement("div");
+                        singleAdoption.classList.add("flex", "flex-col", "copy");
+                        adoptionBox.appendChild(singleAdoption);
 
-                // span for description
-                var dogDescription = document.createElement("span");
-                dogDescription.textContent = response.data.animals[i].description;
-                adoptionBox.appendChild(dogDescription);
+                        // creates span for dog name w/ link to adoption
+                        var dogName = document.createElement("span");
+                        dogName.textContent = response.data.animals[i].name;
+                        dogName.classList.add("fa", "fa-star");
+                        singleAdoption.appendChild(dogName);
+
+                        // span for age
+                        var dogAge = document.createElement("span");
+                        dogAge.textContent = "Age: " + response.data.animals[i].age;
+                        singleAdoption.appendChild(dogAge);
+
+                        // span for size
+                        var dogSize = document.createElement("span");
+                        dogSize.textContent = "Size: " + response.data.animals[i].size;
+                        singleAdoption.appendChild(dogSize);
+
+                        // span for gender
+                        var dogGender = document.createElement("span");
+                        dogGender.textContent = "Gender: " + response.data.animals[i].gender;
+                        singleAdoption.appendChild(dogGender);
+
+                        // span for description
+                        var dogDescription = document.createElement("span");
+                        dogDescription.textContent = response.data.animals[i].description.replace("&#039;", "'");
+                        singleAdoption.appendChild(dogDescription);
+
+                        // more info button
+                        var moreInfo = document.createElement("a");
+                        moreInfo.textContent = "Click here for more info!";
+                        moreInfo.setAttribute("href", response.data.animals[i].url);
+                        moreInfo.setAttribute("target", "_blank");
+                        singleAdoption.appendChild(moreInfo);
+                    }
+                }
+            
+            // function to move clicked adoption box to favorite div
+            var addFavorite = function(event) {
+                var targetEl = event.target;
+                var parentEl = targetEl.parentElement;
+
+                if (targetEl.matches(".fa")) {
+                    favoritesBox.appendChild(parentEl);
+                }
             }
+
+            adoptionBox.addEventListener("click", addFavorite);
         })
+    }
 
 dogSelections();
 randomButton.addEventListener("click", randomDogs);
+adoptionSearch.addEventListener("click", adoptionFetch);
