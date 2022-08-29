@@ -82,7 +82,7 @@ var adoptionFetch = function() {
 
                         // span for description
                         var dogDescription = document.createElement("span");
-                        dogDescription.textContent = response.data.animals[i].description;
+                        dogDescription.textContent = response.data.animals[i].description.replace("&#039;", "'");
                         singleAdoption.appendChild(dogDescription);
 
                         // more info button
