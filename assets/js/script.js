@@ -77,6 +77,9 @@ var adoptionFetch = function() {
 
                 if (targetEl.matches(".fa")) {
                     targetEl.classList.toggle("checked");
+                    var favoritesOption = document.createElement("option");
+                    favoritesOption.textContent = targetEl.textContent;
+                    favoritesDropdown.appendChild(favoritesOption);
                 }
             }
             
