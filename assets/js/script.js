@@ -3,6 +3,7 @@ var randomButton = document.querySelector("#random-button");
 var dogBox = document.querySelector("#dog-box");
 var adoptionBox = document.querySelector("#adoption-info");
 var favoritesBox = document.querySelector("#favorites");
+var adoptionSearch = document.querySelector("#adoption-search");
 
 // adds dropdown option for every breed
 var dogSelections = function() {
@@ -102,11 +103,11 @@ var adoptionFetch = function() {
                     favoritesBox.appendChild(parentEl);
                 }
             }
-            
+
             adoptionBox.addEventListener("click", addFavorite);
         })
     }
 
 dogSelections();
 randomButton.addEventListener("click", randomDogs);
-adoptionFetch();
+adoptionSearch.addEventListener("click", adoptionFetch);
