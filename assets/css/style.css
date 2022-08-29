@@ -2,3 +2,34 @@
     height: 100px;
     width: 100px;
 }
+
+/* wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(140, 255, 0); 
+} */
+
+#header-flex-container {
+    width: 100vw;
+}
+
+footer {
+    /* margin-top: 50px;
+    position: absolute; */
+    
+}
+
+.container {
+    margin: auto;
+}
+
+#dog-box {
+    margin-top: 50px;
+}
+
+#adoption-info-container {
+    margin: auto;
+    justify-self: center;
+    width: 70vw;
+    margin-top: 50px;
+}

@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <wrapper>
+<body class="bg-amber-400">
+    <!-- <wrapper class=""> -->
         <header>
-            <div id="header-flex-container" class="container flex justify-between items-center h-12 bg-blue-500">
+            <div id="header-flex-container" class="p-8 container flex justify-between items-center bg-amber-200">
                 <div id="header-flex-item-1">
-                    <h1 class="app-title">Dog Finder </h1>
-                    <p> Find the right Dog for you!</p>
+                    <h1 class="text-5xl app-title">Dog Finder </h1>
+                    <p class="mt-4"> Find the right Dog for you!</p>
                 </div>
                 <div id="header-flex-item-2">
                 Favorites
@@ -23,7 +23,7 @@
         </header>
 
         <!-- what we do statement/mission statement -->
-        <section id="mission-flex-container" class="container flex justify-center">
+        <section id="mission-flex-container" class="p-6 container flex justify-center">
             <div id="mission-flex-item">
                 <h2>Looking for the perfect dog for you, but not sure on a breed?
                     filler filler filler and then search for that breed of dog near you!
@@ -33,21 +33,21 @@
 
         <!-- random button and search input -->
         <div id="search-container" class="container flex justify-around">
-            <button id="random-button" class="bg-blue-700">random dog</button>
-            <select id="breed-search-bar" class="border-2"></select>
+            <button id="random-button" class="bg-amber-200 p-2 rounded-md">random dog</button>
+            <select id="breed-search-bar" class="bg-amber-200 border-2 rounded-md"></select>
         </div>
-        <div id="dog-box"></div>
+        <div id="dog-box" class="container flex justify-around"></div>
 
 
         <!-- adoption info here -->
         <div id="adoption-info-container" class="container flex justify-center">
-            <div id="adoption-info" class="bg-blue-600 h-96 w-96 container flex flex-col"></div>
+            <div id="adoption-info" class="m-12 rounded-md p-6 bg-amber-200 container flex flex-col"></div>
         </div>
 
-        <footer class="w-full bottom-0 h-16 bg-blue-500">
+        <footer class="w-full bottom-0 h-16 bg-amber-200">
             Made with Love by team 8 
         </footer>
-    </wrapper>
+    <!-- </wrapper> -->
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/@petfinder/petfinder-js/dist/petfinder.min.js"></script>
