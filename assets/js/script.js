@@ -24,6 +24,7 @@ var randomDogs = function() {
 
     fetch(apiUrl).then(function(response) {
         response.json().then(function(data) {
+            console.log(data);
             dogBox.innerHTML = "";
             for (i = 0; i < Object.keys(data.message).length; i++) {
                 // creates img elements
@@ -53,6 +54,9 @@ pf.animal.search()
                 // creates span for dog name w/ link to adoption
                 var dogName = document.createElement("a");
                 dogName.textContent = response.data.animals[i].name;
+                var dogList= response.data.animals[i].name;
+                console.log (dogList);
+                dogList.onClick = favList(dogList);
                 dogName.setAttribute("href", response.data.animals[i].url);
                 dogName.setAttribute("target", "_blank");
                 adoptionBox.appendChild(dogName);
@@ -62,7 +66,14 @@ pf.animal.search()
                 dogDescription.textContent = response.data.animals[i].description;
                 adoptionBox.appendChild(dogDescription);
             }
+           // favList(data);
         })
+    function favList(dogList) {
+        console.log(favList);
+        var data=dogList
+        localStorage.setItem("favDogs",JSON.stringify(data))
+        console.log(data);
+    }    
 
 dogSelections();
 randomButton.addEventListener("click", randomDogs);
