@@ -40,8 +40,8 @@ var randomDogs = function() {
                 breedName.textContent = data.message[i].split("/")[4];
 
                 // appends breed name and images to div
+                breedName.appendChild(dogPicture);
                 dogBox.appendChild(breedName);
-                dogBox.appendChild(dogPicture);
             }
         })
     })
