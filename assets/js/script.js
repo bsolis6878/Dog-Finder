@@ -2,6 +2,7 @@ var randomButton = document.querySelector("#random-button");
 var dogBox = document.querySelector("#dog-box");
 var adoptionBox = document.querySelector("#adoption-info");
 var favoritesBox = document.querySelector("#favorites");
+var favoritesAndAdoption = document.querySelector("#adoption-info-container")
 
 // displays random pictures with breed names when random button is clicked
 var randomDogs = function() {
@@ -99,15 +100,28 @@ var adoptionFetch = function(location) {
 
                 if (targetEl.matches(".fa")) {
                     favoritesBox.appendChild(parentEl);
+
+                    // add remove favorite button
+                    var remove = document.createElement("button");
+                    remove.textContent = "Click here to remove this entry";
+                    remove.className = "delete";
+                    parentEl.appendChild(remove);
                 }
                 
+                if (targetEl.matches(".delete")) {
+                    parentEl.remove();
+                }
+
+                // saves clicked div into localstorage
                 localStorage.setItem("favDog", favoritesBox.innerHTML);
             }
 
-            adoptionBox.addEventListener("click", addFavorite);
+            // event listener to save to favorites
+            favoritesAndAdoption.addEventListener("click", addFavorite);
         })
     }
 
+// loads local storage into favorites
 var favoritesList = localStorage.getItem("favDog");
 favoritesBox.innerHTML = favoritesList;
 
