@@ -35,8 +35,11 @@ var adoptionFetch = function(location) {
     pf.animal.search(location)
         .then(function (response) {
             console.log(response.data.animals);
-                for (i = 0; i < 5; i++) {
-                    if (response.data.animals[i].species === "Dog"); {
+                for (i = 0; i < 7; i++) {
+                    // skips if cat
+                    if (response.data.animals[i].species === "Cat") {
+                        continue;
+                    } else {
                         // creates div to put each entry into
                         var singleAdoption = document.createElement("div");
                         singleAdoption.classList.add("flex", "flex-col", "copy");
@@ -75,12 +78,10 @@ var adoptionFetch = function(location) {
 
                         // span for description
                         var dogDescription = document.createElement("span");
-                        dogDescription.textContent = response.data.animals[i].description;
-                        dogDescription.textContent.replace("&#039;", "'");
-                        dogDescription.textContent.replace("&#39;", "'");
-                        dogDescription.textContent.replace("&amp;#39;", "'");
-                        dogDescription.textContent.replace("&amp;#34;", '"');
-                        singleAdoption.appendChild(dogDescription);
+                        if (response.data.animals[i].description) {
+                            dogDescription.textContent = response.data.animals[i].description.replace("&#039;", "'").replace("&amp;#39;", "'").replace("&amp;#39;", "'").replace("&amp;#34;", '"').replace("&quot;", '"').replace("&amp;", "&");
+                        }
+                            singleAdoption.appendChild(dogDescription);
 
                         // more info button
                         var moreInfo = document.createElement("a");
