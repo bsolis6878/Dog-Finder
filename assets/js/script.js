@@ -1,26 +1,7 @@
-var breedDropdown = document.querySelector("#breed-select");
 var randomButton = document.querySelector("#random-button");
 var dogBox = document.querySelector("#dog-box");
 var adoptionBox = document.querySelector("#adoption-info");
 var favoritesBox = document.querySelector("#favorites");
-var adoptionSearch = document.querySelector("#adoption-search");
-var breedSelect = document.querySelector("#breed-select");
-var citySearch = document.querySelector("#city-search");
-
-// adds dropdown option for every breed
-var dogSelections = function() {
-    var apiUrl =  "https://dog.ceo/api/breeds/list/all"
-
-    fetch(apiUrl).then(function(response) {
-        response.json().then(function(data) {
-            for (i = 0; i < Object.keys(data.message).length; i++) {
-                var dogOption = document.createElement("option");
-                dogOption.textContent = Object.keys(data.message)[i];
-                breedDropdown.appendChild(dogOption);
-            }
-        })
-    })
-}
 
 // displays random pictures with breed names when random button is clicked
 var randomDogs = function() {
@@ -50,23 +31,32 @@ var randomDogs = function() {
 var pf = new petfinder.Client({apiKey: "gLhpVfdeL124JS6DypuD9akf6FplZYPYXpt97ZVUxwngihkFkK", secret: "srVvrkf10LY9NeiQJwvxOTUJ1yBFmakyDs3W39do"});
 
 // sets adoption information into adoption div
-var adoptionFetch = function(location, breed) {
-    pf.animal.search()
+var adoptionFetch = function(location) {
+    pf.animal.search(location)
         .then(function (response) {
-            console.log(location);
-            console.log(breed);
-                for (i = 0; i < response.data.animals.length; i++) {
-                    if (response.data.animals[i].species === "Dog") {
+            console.log(response.data.animals);
+                for (i = 0; i < 5; i++) {
+                    if (response.data.animals[i].species === "Dog"); {
                         // creates div to put each entry into
                         var singleAdoption = document.createElement("div");
                         singleAdoption.classList.add("flex", "flex-col", "copy");
                         adoptionBox.appendChild(singleAdoption);
 
-                        // creates span for dog name w/ link to adoption
+                        // creates span for dog name
                         var dogName = document.createElement("span");
                         dogName.textContent = response.data.animals[i].name;
                         dogName.classList.add("fa", "fa-star");
                         singleAdoption.appendChild(dogName);
+
+                        // span for breed
+                        var dogBreed = document.createElement("span");
+                        dogBreed.textContent = response.data.animals[i].breeds.primary;
+                        singleAdoption.appendChild(dogBreed);
+
+                        // span for location
+                        var dogLocation = document.createElement("span");
+                        dogLocation.textContent = response.data.animals[i].contact.address.city + ", " + response.data.animals[i].contact.address.state;
+                        singleAdoption.appendChild(dogLocation);
 
                         // span for age
                         var dogAge = document.createElement("span");
@@ -109,16 +99,16 @@ var adoptionFetch = function(location, breed) {
                 if (targetEl.matches(".fa")) {
                     favoritesBox.appendChild(parentEl);
                 }
+                
+                localStorage.setItem("favDog", favoritesBox.innerHTML);
             }
 
             adoptionBox.addEventListener("click", addFavorite);
         })
     }
 
-dogSelections();
+var favoritesList = localStorage.getItem("favDog");
+favoritesBox.innerHTML = favoritesList;
+
 randomButton.addEventListener("click", randomDogs);
-adoptionSearch.addEventListener("click", function() {
-    var location = citySearch.value;
-    var breed = breedSelect.value;
-    adoptionFetch(location, breed);
-});
+adoptionFetch();
