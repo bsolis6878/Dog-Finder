@@ -59,13 +59,13 @@ var adoptionFetch = function(location, breed) {
                     if (response.data.animals[i].species === "Dog") {
                         // creates div to put each entry into
                         var singleAdoption = document.createElement("div");
-                        singleAdoption.classList.add("flex", "flex-col", "copy");
+                        singleAdoption.classList.add("flex", "flex-col", "copy", "entry");
                         adoptionBox.appendChild(singleAdoption);
 
                         // creates span for dog name w/ link to adoption
                         var dogName = document.createElement("span");
                         dogName.textContent = response.data.animals[i].name;
-                        dogName.classList.add("fa", "fa-star");
+                        dogName.classList.add("fa", "fa-star", "text-xl");
                         singleAdoption.appendChild(dogName);
 
                         // span for age
