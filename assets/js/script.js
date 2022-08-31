@@ -49,7 +49,7 @@ var adoptionFetch = function(location) {
                         // creates span for dog name
                         var dogName = document.createElement("span");
                         dogName.textContent = response.data.animals[i].name;
-                        dogName.classList.add("fa", "fa-star");
+                        dogName.classList.add("fa", "fa-star", "hover-color", "dog-name");
                         singleAdoption.appendChild(dogName);
 
                         // span for breed
@@ -92,38 +92,53 @@ var adoptionFetch = function(location) {
                         singleAdoption.appendChild(moreInfo);
                     }
                 }
-            
-            // function to move clicked adoption box to favorite div
-            var addFavorite = function(event) {
-                var targetEl = event.target;
-                var parentEl = targetEl.parentElement;
-
-                if (targetEl.matches(".fa")) {
-                    favoritesBox.appendChild(parentEl);
-
-                    // add remove favorite button
-                    var remove = document.createElement("button");
-                    remove.textContent = "Click here to remove this entry";
-                    remove.className = "delete";
-                    parentEl.appendChild(remove);
-                }
-                
-                if (targetEl.matches(".delete")) {
-                    parentEl.remove();
-                }
-
-                // saves clicked div into localstorage
-                localStorage.setItem("favDog", favoritesBox.innerHTML);
-            }
-
-            // event listener to save to favorites
-            favoritesAndAdoption.addEventListener("click", addFavorite);
         })
     }
+
+// function to move clicked adoption box to favorite div
+var addFavorite = function(event) {
+    var targetEl = event.target;
+    var parentEl = targetEl.parentElement;
+
+    if (targetEl.matches(".dog-name")) {
+        favoritesBox.appendChild(parentEl);
+        targetEl.classList.remove("dog-name");
+
+        // add remove favorite button
+        var remove = document.createElement("button");
+        remove.textContent = "Click here to remove this entry";
+        remove.className = "delete";
+        parentEl.appendChild(remove);
+    }
+    
+    // removes favorite if delete class is clicked
+    if (targetEl.matches(".delete")) {
+        parentEl.remove();
+    }
+
+    // saves clicked div into localstorage
+    localStorage.setItem("favDog", favoritesBox.innerHTML);
+}
+
+// event listener for favorites/adoptions
+favoritesAndAdoption.addEventListener("click", addFavorite);
 
 // loads local storage into favorites
 var favoritesList = localStorage.getItem("favDog");
 favoritesBox.innerHTML = favoritesList;
 
+// event listener for random dogs
 randomButton.addEventListener("click", randomDogs);
+
+// button which calls adoption fetch again
+var callAgain = document.createElement("button");
+callAgain.textContent = "Click here to check for more results!";
+adoptionBox.appendChild(callAgain);
+
+var callFetch = function() {
+    adoptionFetch();
+}
+
+callAgain.addEventListener("click", callFetch)
+
 adoptionFetch();
