@@ -37,3 +37,7 @@ footer {
 input {
     border: black solid 3px;
 }
+
+.hover-color:hover {
+    color: yellow;
+}
