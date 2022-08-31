@@ -38,7 +38,7 @@ var adoptionFetch = function(location) {
             console.log(response.data.animals);
                 for (i = 0; i < 7; i++) {
                     // skips if cat
-                    if (response.data.animals[i].species === "Cat") {
+                    if (response.data.animals[i].species !== "Dog" ) {
                         continue;
                     } else {
                         // creates div to put each entry into
