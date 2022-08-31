@@ -1,26 +1,8 @@
-var breedDropdown = document.querySelector("#breed-select");
 var randomButton = document.querySelector("#random-button");
 var dogBox = document.querySelector("#dog-box");
 var adoptionBox = document.querySelector("#adoption-info");
 var favoritesBox = document.querySelector("#favorites");
-var adoptionSearch = document.querySelector("#adoption-search");
-var breedSelect = document.querySelector("#breed-select");
-var citySearch = document.querySelector("#city-search");
-
-// adds dropdown option for every breed
-var dogSelections = function() {
-    var apiUrl =  "https://dog.ceo/api/breeds/list/all"
-
-    fetch(apiUrl).then(function(response) {
-        response.json().then(function(data) {
-            for (i = 0; i < Object.keys(data.message).length; i++) {
-                var dogOption = document.createElement("option");
-                dogOption.textContent = Object.keys(data.message)[i];
-                breedDropdown.appendChild(dogOption);
-            }
-        })
-    })
-}
+var favoritesAndAdoption = document.querySelector("#adoption-info-container")
 
 // displays random pictures with breed names when random button is clicked
 var randomDogs = function() {
@@ -40,8 +22,8 @@ var randomDogs = function() {
                 breedName.textContent = data.message[i].split("/")[4];
 
                 // appends breed name and images to div
+                breedName.appendChild(dogPicture);
                 dogBox.appendChild(breedName);
-                dogBox.appendChild(dogPicture);
             }
         })
     })
@@ -50,23 +32,35 @@ var randomDogs = function() {
 var pf = new petfinder.Client({apiKey: "gLhpVfdeL124JS6DypuD9akf6FplZYPYXpt97ZVUxwngihkFkK", secret: "srVvrkf10LY9NeiQJwvxOTUJ1yBFmakyDs3W39do"});
 
 // sets adoption information into adoption div
-var adoptionFetch = function(location, breed) {
-    pf.animal.search()
+var adoptionFetch = function(location) {
+    pf.animal.search(location)
         .then(function (response) {
-            console.log(location);
-            console.log(breed);
-                for (i = 0; i < response.data.animals.length; i++) {
-                    if (response.data.animals[i].species === "Dog") {
+            console.log(response.data.animals);
+                for (i = 0; i < 7; i++) {
+                    // skips if cat
+                    if (response.data.animals[i].species !== "Dog" ) {
+                        continue;
+                    } else {
                         // creates div to put each entry into
                         var singleAdoption = document.createElement("div");
-                        singleAdoption.classList.add("flex", "flex-col", "copy", "entry");
+                        singleAdoption.classList.add("flex", "flex-col", "copy");
                         adoptionBox.appendChild(singleAdoption);
 
-                        // creates span for dog name w/ link to adoption
+                        // creates span for dog name
                         var dogName = document.createElement("span");
                         dogName.textContent = response.data.animals[i].name;
-                        dogName.classList.add("fa", "fa-star", "text-xl");
+                        dogName.classList.add("fa", "fa-star", "hover-color", "dog-name");
                         singleAdoption.appendChild(dogName);
+
+                        // span for breed
+                        var dogBreed = document.createElement("span");
+                        dogBreed.textContent = response.data.animals[i].breeds.primary;
+                        singleAdoption.appendChild(dogBreed);
+
+                        // span for location
+                        var dogLocation = document.createElement("span");
+                        dogLocation.textContent = response.data.animals[i].contact.address.city + ", " + response.data.animals[i].contact.address.state;
+                        singleAdoption.appendChild(dogLocation);
 
                         // span for age
                         var dogAge = document.createElement("span");
@@ -85,12 +79,10 @@ var adoptionFetch = function(location, breed) {
 
                         // span for description
                         var dogDescription = document.createElement("span");
-                        dogDescription.textContent = response.data.animals[i].description;
-                        dogDescription.textContent.replace("&#039;", "'");
-                        dogDescription.textContent.replace("&#39;", "'");
-                        dogDescription.textContent.replace("&amp;#39;", "'");
-                        dogDescription.textContent.replace("&amp;#34;", '"');
-                        singleAdoption.appendChild(dogDescription);
+                        if (response.data.animals[i].description) {
+                            dogDescription.textContent = response.data.animals[i].description.replace("&#039;", "'").replace("&amp;#39;", "'").replace("&amp;#39;", "'").replace("&amp;#34;", '"').replace("&quot;", '"').replace("&amp;", "&");
+                        }
+                            singleAdoption.appendChild(dogDescription);
 
                         // more info button
                         var moreInfo = document.createElement("a");
@@ -100,25 +92,53 @@ var adoptionFetch = function(location, breed) {
                         singleAdoption.appendChild(moreInfo);
                     }
                 }
-            
-            // function to move clicked adoption box to favorite div
-            var addFavorite = function(event) {
-                var targetEl = event.target;
-                var parentEl = targetEl.parentElement;
-
-                if (targetEl.matches(".fa")) {
-                    favoritesBox.appendChild(parentEl);
-                }
-            }
-
-            adoptionBox.addEventListener("click", addFavorite);
         })
     }
 
-dogSelections();
+// function to move clicked adoption box to favorite div
+var addFavorite = function(event) {
+    var targetEl = event.target;
+    var parentEl = targetEl.parentElement;
+
+    if (targetEl.matches(".dog-name")) {
+        favoritesBox.appendChild(parentEl);
+        targetEl.classList.remove("dog-name");
+
+        // add remove favorite button
+        var remove = document.createElement("button");
+        remove.textContent = "Click here to remove this entry";
+        remove.className = "delete";
+        parentEl.appendChild(remove);
+    }
+    
+    // removes favorite if delete class is clicked
+    if (targetEl.matches(".delete")) {
+        parentEl.remove();
+    }
+
+    // saves clicked div into localstorage
+    localStorage.setItem("favDog", favoritesBox.innerHTML);
+}
+
+// event listener for favorites/adoptions
+favoritesAndAdoption.addEventListener("click", addFavorite);
+
+// loads local storage into favorites
+var favoritesList = localStorage.getItem("favDog");
+favoritesBox.innerHTML = favoritesList;
+
+// event listener for random dogs
 randomButton.addEventListener("click", randomDogs);
-adoptionSearch.addEventListener("click", function() {
-    var location = citySearch.value;
-    var breed = breedSelect.value;
-    adoptionFetch(location, breed);
-});
+
+// button which calls adoption fetch again
+var callAgain = document.createElement("button");
+callAgain.textContent = "Click here to check for more results!";
+adoptionBox.appendChild(callAgain);
+
+var callFetch = function() {
+    adoptionFetch();
+}
+
+callAgain.addEventListener("click", callFetch)
+
+adoptionFetch();
