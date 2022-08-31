@@ -43,13 +43,13 @@ var adoptionFetch = function(location) {
                     } else {
                         // creates div to put each entry into
                         var singleAdoption = document.createElement("div");
-                        singleAdoption.classList.add("flex", "flex-col", "copy");
+                        singleAdoption.classList.add("flex", "flex-col", "copy", "doggies");
                         adoptionBox.appendChild(singleAdoption);
 
                         // creates span for dog name
                         var dogName = document.createElement("span");
                         dogName.textContent = response.data.animals[i].name;
-                        dogName.classList.add("fa", "fa-star", "hover-color", "dog-name");
+                        dogName.classList.add("fa", "fa-star", "hover-color", "dog-name","text-3xl");
                         singleAdoption.appendChild(dogName);
 
                         // span for breed
@@ -89,6 +89,7 @@ var adoptionFetch = function(location) {
                         moreInfo.textContent = "Click here for more info!";
                         moreInfo.setAttribute("href", response.data.animals[i].url);
                         moreInfo.setAttribute("target", "_blank");
+                        moreInfo.classList.add("hover-color")
                         singleAdoption.appendChild(moreInfo);
                     }
                 }
@@ -108,6 +109,7 @@ var addFavorite = function(event) {
         var remove = document.createElement("button");
         remove.textContent = "Click here to remove this entry";
         remove.className = "delete";
+        remove.classList.add("hover-color")
         parentEl.appendChild(remove);
     }
     
@@ -126,6 +128,7 @@ favoritesAndAdoption.addEventListener("click", addFavorite);
 // loads local storage into favorites
 var favoritesList = localStorage.getItem("favDog");
 favoritesBox.innerHTML = favoritesList;
+favoritesBox.classList.add("p-6", "bg-green-400", 'container', "flex", "flex-col", "m-12", "rounded-md")
 
 // event listener for random dogs
 randomButton.addEventListener("click", randomDogs);
@@ -133,7 +136,9 @@ randomButton.addEventListener("click", randomDogs);
 // button which calls adoption fetch again
 var callAgain = document.createElement("button");
 callAgain.textContent = "Click here to check for more results!";
+callAgain.classList.add("text-white", "hover-color")
 adoptionBox.appendChild(callAgain);
+
 
 var callFetch = function() {
     adoptionFetch();
