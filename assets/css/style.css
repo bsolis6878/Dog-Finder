@@ -5,20 +5,6 @@
     border-radius: 4px;
 }
 
-/* wrapper {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(140, 255, 0); 
-} /
-
-#header-flex-container {
-    width: 100vw;
-}
-
-footer {
-    / margin-top: 50px;
-    position: absolute; */
-
 body {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -87,11 +73,12 @@ input {
 }
 
 .doggies {
-    border: 1px solid grey;
+    border: 1px solid white;
     margin-top: 6px;
     padding: 10px;
     text-align: center;
     color: white;
+    background-color: rgb(54, 195, 63);
 }
 
 /* If the screen size is 601px or more, set the font-size of <div> to 80px */
