@@ -1,22 +1,52 @@
 .images {
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    border-radius: 4px;
 }
 
 /* wrapper {
     width: 100vw;
     height: 100vh;
     background-color: rgb(140, 255, 0); 
-} */
+} /
 
 #header-flex-container {
     width: 100vw;
 }
 
 footer {
-    /* margin-top: 50px;
+    / margin-top: 50px;
     position: absolute; */
-    
+
+body {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    display: flex;
+    justify-content: center;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: larger;
+}
+
+#mission-text {
+    text-align: center;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#random-button {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+#random-button:hover {
+    color: yellow;
 }
 
 .container {
@@ -30,22 +60,57 @@ footer {
 #adoption-info-container {
     margin: auto;
     justify-self: center;
-    width: 70vw;
+    width: 80vw;
     margin-top: 50px;
+}
+
+#adoption-info {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 input {
     border: black solid 3px;
 }
 
-<<<<<<< HEAD
-.entry {
-    border: 1px solid black;
-    margin-top: 10px;
-    padding: 10px;
-    text-align: center;
-=======
 .hover-color:hover {
     color: yellow;
->>>>>>> develop
 }
+
+#favorites:empty {
+    display:none;
+}
+
+#favorites {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    padding-top: 50px;
+    height:fit-content;
+}
+
+.doggies {
+    border: 1px solid grey;
+    margin-top: 6px;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+/* If the screen size is 601px or more, set the font-size of <div> to 80px */
+@media only screen and (min-width: 601px) {
+    #favorites, #adoption-info-container {
+      font-size: 18px;
+    }
+  }
+
+  /* If the screen size is 600px or less, set the font-size of <div> to 30px */
+  @media only screen and (max-width: 600px) {
+    #favorites, #adoption-info-container {
+      font-size: 15px;
+    }
+  }
+ /* if screen size is 600px or less than favorites column goes under adoption, random dog column */
+ @media screen and (max-width: 600px) {
+    #adoption-info-container, #dog-box {
+      flex-direction: column-reverse;
+      align-items: center;
+    }
+  }
